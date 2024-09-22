@@ -83,12 +83,12 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-              <Link href="/cifrado/cesar/#encoder">
-                <Button size="lg">Cifrado César</Button>
-              </Link>
-              <Link href="/cifrado/transposicion/#encoder">
-                <Button size="lg">Cifrado transposición</Button>
-              </Link>
+                <Link href="/cifrado/cesar/#encoder">
+                  <Button size="lg">Cifrado César</Button>
+                </Link>
+                <Link href="/cifrado/transposicion/#encoder">
+                  <Button size="lg">Cifrado transposición</Button>
+                </Link>
               </div>
             </div>
           </div>

@@ -5,14 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      
+
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none mb-8">
+          <div className="container mx-auto px-4 md:px-6 text-center">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl mb-8">
               Acerca de CifradoEdu
             </h1>
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-start">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-start justify-center">
               <Card>
                 <CardHeader>
                   <CardTitle>Nuestra Misión</CardTitle>
@@ -48,12 +48,14 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* Segunda sección: Características Clave */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
               Características Clave
             </h2>
-            <div className="grid gap-6 lg:grid-cols-3 lg:gap-12 items-start">
+            <div className="grid gap-6 lg:grid-cols-3 lg:gap-12 items-start justify-center">
               <Card>
                 <CardHeader>
                   <CardTitle>Herramientas Interactivas</CardTitle>
@@ -84,8 +86,10 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* Tercera sección: Llamada a la acción */}
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -95,15 +99,18 @@ export default function AboutPage() {
                   Explora nuestras herramientas y descubre la fascinante historia detrás de los métodos de cifrado clásicos.
                 </p>
               </div>
-              <Link href="/cipher-tools">
-                <Button size="lg">Ir a las Herramientas de Cifrado</Button>
-              </Link>
+              <div className="space-x-4">
+                <Link href="/cifrado/cesar/#encoder">
+                  <Button size="lg">Cifrado César</Button>
+                </Link>
+                <Link href="/cifrado/transposicion/#encoder">
+                  <Button size="lg">Cifrado transposición</Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
       </main>
-      
     </div>
   )
 }
-
