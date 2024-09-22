@@ -97,7 +97,7 @@ export default function CifradoEscitala() {
       const result = scytaleCipher(normalizedInput, columns, decrypt)
       setOutput(result)
       setError("")
-    } catch (err) {
+    } catch (err:any) {
       setError(err.message)
     }
   }

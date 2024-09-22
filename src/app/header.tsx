@@ -35,7 +35,7 @@ export default function Header() {
   )
 }
 
-function LockIcon(props) {
+function LockIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
