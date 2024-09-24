@@ -82,7 +82,7 @@ export default function Home() {
                   Prueba nuestras herramientas interactivas y aprende cómo funcionan estos métodos de cifrado.
                 </p>
               </div>
-              <div className="space-x-4">
+              <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex sm:flex-row flex-col">
                 <Link href="/cifrado/cesar/#encoder">
                   <Button size="lg">Cifrado César</Button>
                 </Link>

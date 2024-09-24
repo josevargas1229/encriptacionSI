@@ -49,7 +49,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Segunda sección: Características Clave */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
@@ -87,7 +86,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Tercera sección: Llamada a la acción */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -99,7 +97,7 @@ export default function AboutPage() {
                   Explora nuestras herramientas y descubre la fascinante historia detrás de los métodos de cifrado clásicos.
                 </p>
               </div>
-              <div className="space-x-4">
+              <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex sm:flex-row flex-col">
                 <Link href="/cifrado/cesar/#encoder">
                   <Button size="lg">Cifrado César</Button>
                 </Link>
