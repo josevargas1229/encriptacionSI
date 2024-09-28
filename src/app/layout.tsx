@@ -27,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header/>
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen`}>
+        <Header />
+        <div className="flex-1">
+          {children}
+        </div>
         <Toaster />
         <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
           <p className="text-xs text-muted-foreground">© 2024 CifradoEdu. Todos los derechos reservados.</p>

@@ -17,11 +17,11 @@ export default function Header() {
         <Link className="text-sm font-medium hover:underline underline-offset-4" href="/" onClick={() => setIsMenuOpen(false)}>
           Inicio
         </Link>
-        <Link className="text-sm font-medium hover:underline underline-offset-4" href="/about" onClick={() => setIsMenuOpen(false)}>
-          Acerca de
-        </Link>
         <Link className="text-sm font-medium hover:underline underline-offset-4" href="/cifrado" onClick={() => setIsMenuOpen(false)}>
           Cifrado
+        </Link>
+        <Link className="text-sm font-medium hover:underline underline-offset-4" href="/about" onClick={() => setIsMenuOpen(false)}>
+          Acerca de
         </Link>
       </nav>
       <button className="ml-auto md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
