@@ -33,22 +33,18 @@ export default function RootLayout({
           {children}
         </div>
         <Toaster />
-        <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-          <p className="text-xs text-muted-foreground">© 2024 CifradoEdu. Todos los derechos reservados.</p>
-          {/* <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-            <Link className="text-xs hover:underline underline-offset-4" href="#">
-              Términos de Servicio
-            </Link>
-            <Link className="text-xs hover:underline underline-offset-4" href="#">
-              Privacidad
-            </Link>
-          </nav> */}
-          <div className="sm:ml-auto flex gap-4 sm:gap-6">
+        <footer className="flex flex-col sm:flex-row justify-between items-center py-6 w-full px-4 md:px-6 border-t">
+          <div className="text-center sm:text-left">
+            <p className="text-xs text-muted-foreground">© 2024 CifradoEdu. Todos los derechos reservados.</p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-center sm:text-right space-y-2 sm:space-y-0">
             <p>José de Jesús Vargas Esparza</p>
             <p>Ing. Desarrollo y Gestión de Software</p>
             <p>7° &quot;B&quot;</p>
           </div>
         </footer>
+
       </body>
     </html>
   );
