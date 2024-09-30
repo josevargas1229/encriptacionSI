@@ -11,8 +11,13 @@ import { useToast } from "@/hooks/use-toast"
 import { HelpCircle, Dices } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Breadcrumbs from "@/components/pagina/breadcrums"
-
-// ElGamal logic (simplified for demonstration)
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+// logica del cifrado ElGamal 
 const ElGamal = {
   isPrime: (n: number) => {
     for (let i = 2; i <= Math.sqrt(n); i++) {
@@ -52,7 +57,7 @@ const ElGamal = {
     return Math.floor(Math.random() * (max - 2)) + 2
   }
 }
-
+//definiciones de tipos
 type PublicKey = { p: number; g: number; h: number };
 
 interface AliceState {
@@ -132,9 +137,69 @@ export default function ElGamalCipher() {
   }
   return (
     <div>
-          <div className="ml-4">
-            <Breadcrumbs />
+      <div className="ml-4">
+        <Breadcrumbs />
+      </div>
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none mb-8">
+                Algoritmo de Cifrado ElGamal
+              </h1>
+              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
+                ElGamal es un sistema de cifrado de clave pública basado en el problema del logaritmo discreto. Proporciona tanto cifrado como firma digital, y es ampliamente utilizado en criptografía moderna.
+              </p>
+            </div>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>¿Qué es ElGamal?</AccordionTrigger>
+                <AccordionContent>
+                  ElGamal es un algoritmo criptográfico asimétrico desarrollado por Taher Elgamal en 1985. Se basa en la dificultad computacional del problema del logaritmo discreto en grupos cíclicos finitos. ElGamal proporciona un esquema de cifrado y un esquema de firma digital, ambos utilizados en varios protocolos de seguridad.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>¿Cómo funciona ElGamal?</AccordionTrigger>
+                <AccordionContent>
+                  El funcionamiento de ElGamal se divide en tres fases principales:
+                  <ol className="list-decimal pl-5 mt-2 text-left">
+                    <li>Generación de claves: Se elige un grupo cíclico G de orden p con un generador g. El receptor elige una clave privada x y calcula la clave pública h = g^x mod p.</li>
+                    <li>Cifrado: Para cifrar un mensaje m, el remitente elige un número aleatorio y y calcula c1 = g^y mod p y c2 = m * h^y mod p. El texto cifrado es el par (c1, c2).</li>
+                    <li>Descifrado: El receptor calcula s = c1^x mod p y luego m = c2 * s^(-1) mod p para recuperar el mensaje original.</li>
+                  </ol>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>Aplicaciones de ElGamal</AccordionTrigger>
+                <AccordionContent>
+                  ElGamal se utiliza en diversas áreas de la criptografía y la seguridad informática:
+                  <ul className="list-disc pl-5 mt-2 text-left">
+                    <li>Cifrado de correos electrónicos y comunicaciones seguras.</li>
+                    <li>Firmas digitales para autenticación y no repudio.</li>
+                    <li>Protocolos de votación electrónica.</li>
+                    <li>Sistemas de gestión de claves en infraestructuras de clave pública (PKI).</li>
+                    <li>Implementaciones de criptografía de curva elíptica (variante de ElGamal).</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger>Seguridad de ElGamal</AccordionTrigger>
+                <AccordionContent>
+                  La seguridad de ElGamal se basa en varios factores:
+                  <ul className="list-disc pl-5 mt-2 text-left">
+                    <li>Problema del Logaritmo Discreto: La dificultad de calcular x dado g^x mod p es fundamental para la seguridad del sistema.</li>
+                    <li>Tamaño de las claves: Se recomiendan claves de al menos 2048 bits para una seguridad adecuada.</li>
+                    <li>Aleatoriedad: La generación de números aleatorios seguros es crucial para la robustez del cifrado.</li>
+                    <li>Resistencia a ataques: ElGamal es resistente a varios tipos de ataques, pero puede ser vulnerable a ataques de texto claro elegido si no se implementa correctamente.</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <div className="space-x-4"></div>
           </div>
+        </div>
+      </section>
+      <section id="encoder" className="py-3 md:py-6 lg:py-8"></section>
       <section>
         <div className="container mx-auto p-4">
           <h1 className="text-3xl font-bold text-center mb-8">ElGamal Encryption Demo</h1>

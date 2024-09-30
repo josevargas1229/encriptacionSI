@@ -14,14 +14,30 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Breadcrumbs from "@/components/pagina/breadcrums"
+import { HelpCircle } from "lucide-react"
+import { FaRegCopy } from "react-icons/fa"
+import { useToast } from "@/hooks/use-toast"
 
+const HelpTooltip = ({ content }: { content: string }) => (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <HelpCircle className="h-4 w-4 ml-1 inline-block" />
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{content}</p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+)
 export default function SHA3Hash() {
   const [input, setInput] = useState("")
   const [variant, setVariant] = useState("SHA3-256")
   const [output, setOutput] = useState("")
   const [error, setError] = useState("")
-
+  const { toast } = useToast()
   const handleHash = () => {
     try {
       if (!input) throw new Error("Por favor, ingrese un mensaje para generar el hash.")
@@ -50,7 +66,15 @@ export default function SHA3Hash() {
       setError(err.message)
     }
   }
-
+  const handleCopy = () => {
+    if (output) {
+      toast({
+        title: "¡Texto copiado!",
+        description: "El texto ha sido copiado al portapapeles.",
+      })
+      navigator.clipboard.writeText(output)
+    }
+  }
   return (
     <div>
       <div className="ml-4">
@@ -87,25 +111,39 @@ export default function SHA3Hash() {
                   SHA-3 se utiliza en diversas áreas, como la generación de firmas digitales, la verificación de la integridad de datos, y la creación de funciones hash seguras para contraseñas y otros datos sensibles.
                 </AccordionContent>
               </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger>¿Por qué SHA-3 es irreversible?</AccordionTrigger>
+                <AccordionContent>
+                  SHA-3, como todas las funciones hash criptográficas, está diseñada para ser unidireccional. Esto significa que:
+                  <ul className="list-disc pl-5 mt-2 text-left">
+                    <li>Es computacionalmente fácil calcular el hash de un mensaje dado.</li>
+                    <li>Es extremadamente difícil (prácticamente imposible) encontrar el mensaje original a partir de su hash.</li>
+                    <li>Esta propiedad se conoce como "resistencia a la preimagen" y es crucial para la seguridad en muchas aplicaciones criptográficas.</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
             <div className="space-x-4"></div>
           </div>
         </div>
       </section>
-      
+
       <section id="encoder" className="py-6 md:py-12 lg:py-16"></section>
 
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Generar Hash con SHA-3</CardTitle>
           <CardDescription>
-            Selecciona una variante de SHA-3 y genera el hash del mensaje ingresado.
+            Selecciona una variante de SHA-3 y genera el hash del mensaje ingresado. Ej. una contraseña sería indescifrable aplicándole un hasheado, lo que permita que tu contraseña sea segura.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="sha3-input">Mensaje</Label>
+              <Label htmlFor="sha3-input">
+                Mensaje
+                <HelpTooltip content="Ingrese el texto que desea convertir en hash. Puede ser cualquier cadena de caracteres." />
+              </Label>
               <Input
                 id="sha3-input"
                 placeholder="Ingrese el mensaje"
@@ -114,7 +152,10 @@ export default function SHA3Hash() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="sha3-variant">Variante de SHA-3</Label>
+              <Label htmlFor="sha3-variant">
+                Variante de SHA-3
+                <HelpTooltip content="Seleccione la variante de SHA-3 que desea utilizar. Cada variante produce un hash de diferente longitud." />
+              </Label>
               <Select value={variant} onValueChange={setVariant}>
                 <SelectTrigger id="sha3-variant">
                   <SelectValue placeholder="Seleccione una variante" />
@@ -130,8 +171,15 @@ export default function SHA3Hash() {
             <Button onClick={handleHash}>Generar Hash</Button>
             {output && (
               <div className="mt-4 p-4 bg-secondary rounded-md">
-                <p className="font-medium">Resultado ({variant}):</p>
-                <p className="break-all">{output}</p>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-medium">Resultado:</p>
+                    <p className="break-all">{output}</p>
+                  </div>
+                  <Button variant="ghost" onClick={() => handleCopy()}>
+                    <FaRegCopy className="text-xl" />
+                  </Button>
+                </div>
               </div>
             )}
             {error && (
@@ -143,7 +191,7 @@ export default function SHA3Hash() {
           </div>
         </CardContent>
       </Card>
-      
+
       <section>
         <div className="mt-4 mx-4">
           <h3 className="font-semibold">Referencias</h3>

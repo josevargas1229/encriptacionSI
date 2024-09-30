@@ -6,9 +6,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, HelpCircle } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import Breadcrumbs from "@/components/pagina/breadcrums"
+import { FaRegCopy } from "react-icons/fa"
+import { useToast } from "@/hooks/use-toast"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 // Simulación básica del cifrado Blowfish
 function simulatedBlowfish(str: string, key: string, decrypt = false): string {
@@ -23,7 +26,18 @@ function simulatedBlowfish(str: string, key: string, decrypt = false): string {
     })
     .join('')
 }
-
+const HelpTooltip = ({ content }: { content: string }) => (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <HelpCircle className="h-4 w-4 ml-1 inline-block" />
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{content}</p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+)
 export default function CifradoBlowfish() {
   const [input, setInput] = useState("")
   const [key, setKey] = useState("")
@@ -32,7 +46,7 @@ export default function CifradoBlowfish() {
   const [showKey, setShowKey] = useState(false)
   const [encryptedMessage, setEncryptedMessage] = useState("")
   const [encryptionKey, setEncryptionKey] = useState("")
-
+  const { toast } = useToast()
   const handleCipher = (decrypt: boolean) => {
     try {
       if (!input) throw new Error("Por favor, ingrese un mensaje para cifrar/descifrar.")
@@ -58,7 +72,15 @@ export default function CifradoBlowfish() {
   const toggleShowKey = () => {
     setShowKey(!showKey)
   }
-
+  const handleCopy = () => {
+    if (output) {
+      toast({
+        title: "¡Texto copiado!",
+        description: "El texto ha sido copiado al portapapeles.",
+      })
+      navigator.clipboard.writeText(output)
+    }
+  }
   return (
     <div>
       <div className="ml-4">
@@ -73,7 +95,7 @@ export default function CifradoBlowfish() {
                 Cifrado Blowfish
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Blowfish es un algoritmo de cifrado simétrico diseñado para una alta velocidad y seguridad. 
+                Blowfish es un algoritmo de cifrado simétrico diseñado para una alta velocidad y seguridad.
                 Esta es una simulación simplificada con fines educativos.
               </p>
             </div>
@@ -104,12 +126,17 @@ export default function CifradoBlowfish() {
           <CardTitle>Cifrado Blowfish (Simulado)</CardTitle>
           <CardDescription>
             Esta es una simulación educativa de Blowfish. No debe usarse para propósitos de seguridad real.
+            <br />Este simulador fue hecho para demostrar el funcionamiento de este cifrado, sin utilizar librerias adicionales o guardando información sobre las claves utilizadas, por lo que puede haber fallas al descifrar más de un mensaje a la vez.
+            <br />Para utilizarlo simplemente ingrese el mensaje que quiera cifrar/descifrar y su respectiva clave.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="blowfish-input">Mensaje</Label>
+              <Label htmlFor="blowfish-input">
+                Mensaje
+                <HelpTooltip content="Ingrese el texto que desea cifrar o descifrar usando el algoritmo Blowfish." />
+              </Label>
               <Input
                 id="blowfish-input"
                 placeholder="Ingrese el mensaje"
@@ -118,7 +145,10 @@ export default function CifradoBlowfish() {
               />
             </div>
             <div className="space-y-2 relative">
-              <Label htmlFor="blowfish-key">Clave Blowfish</Label>
+              <Label htmlFor="blowfish-key">
+                Clave Blowfish
+                <HelpTooltip content="Ingrese la clave para el cifrado o descifrado. La misma clave se usa para ambos procesos." />
+              </Label>
               <Input
                 id="blowfish-key"
                 placeholder="Ingrese la clave"
@@ -140,8 +170,15 @@ export default function CifradoBlowfish() {
             </div>
             {output && (
               <div className="mt-4 p-4 bg-secondary rounded-md">
-                <p className="font-medium">Resultado:</p>
-                <p className="break-all">{output}</p>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-medium">Resultado:</p>
+                    <p className="break-all">{output}</p>
+                  </div>
+                  <Button variant="ghost" onClick={() => handleCopy()}>
+                    <FaRegCopy className="text-xl" />
+                  </Button>
+                </div>
               </div>
             )}
             {error && (
