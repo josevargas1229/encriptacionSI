@@ -12,20 +12,8 @@ import Breadcrumbs from "@/components/pagina/breadcrums"
 import { FaRegCopy } from "react-icons/fa"
 import { useToast } from "@/hooks/use-toast"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+const Blowfish = require('javascript-blowfish');
 
-// Simulación básica del cifrado Blowfish
-function simulatedBlowfish(str: string, key: string, decrypt = false): string {
-  const keySum = key.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0)
-
-  return str
-    .split('')
-    .map(char => {
-      const code = char.charCodeAt(0)
-      const shift = decrypt ? -keySum : keySum
-      return String.fromCharCode((code + shift + 65536) % 65536)
-    })
-    .join('')
-}
 const HelpTooltip = ({ content }: { content: string }) => (
   <TooltipProvider>
     <Tooltip>
@@ -52,20 +40,24 @@ export default function CifradoBlowfish() {
       if (!input) throw new Error("Por favor, ingrese un mensaje para cifrar/descifrar.")
       if (!key) throw new Error("Por favor, ingrese una clave para el cifrado Blowfish.")
 
+      // Usamos la librería de Blowfish para cifrado real
+      const bf = new Blowfish(key);
+
       if (decrypt) {
         if (key !== encryptionKey) throw new Error("Clave inválida para el descifrado.")
-        const result = simulatedBlowfish(input, key, true)
-        setOutput(result)
-        setError("")
+        const decrypted = bf.decrypt(bf.base64Decode(input));  // Descifrado
+        setOutput(decrypted);
       } else {
-        const result = simulatedBlowfish(input, key, false)
-        setOutput(result)
-        setEncryptedMessage(result)
-        setEncryptionKey(key)
-        setError("")
+        const encrypted = bf.encrypt(input);  // Cifrado
+        let encryptedMime = bf.base64Encode(encrypted);
+        setOutput(encryptedMime);
+        setEncryptedMessage(encryptedMime);
+        setEncryptionKey(key);
       }
+
+      setError(""); // Limpiar errores si el proceso fue exitoso
     } catch (err: any) {
-      setError(err.message)
+      setError(err.message);
     }
   }
 
