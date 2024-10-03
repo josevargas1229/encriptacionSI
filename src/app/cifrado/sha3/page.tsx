@@ -192,17 +192,7 @@ export default function SHA3Hash() {
         </CardContent>
       </Card>
 
-      <section>
-        <div className="mt-4 mx-4">
-          <h3 className="font-semibold">Referencias</h3>
-          <p>
-            Información sobre el SHA-3. (s/f). NIST. Recuperado el 28 de septiembre de 2024,
-            <a href="https://csrc.nist.gov/projects/hash-functions/sha-3" target="_blank" rel="noopener noreferrer">
-              https://csrc.nist.gov/projects/hash-functions/sha-3
-            </a>
-          </p>
-        </div>
-      </section>
+      
     </div>
   )
 }

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { LockIcon, ShuffleIcon, KeyIcon, ShieldIcon, HashIcon } from "lucide-react"
+import FrameworkComparison from "./FrameworkComparison"
 
 export default function AboutPage() {
   return (
@@ -44,6 +45,10 @@ export default function AboutPage() {
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+          <FrameworkComparison/>
+        </section>
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+
           <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
               Métodos de Cifrado
